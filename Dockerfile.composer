@@ -1,0 +1,13 @@
+FROM composer:latest
+LABEL maintainer="Tim Aerdts (INOVA) <tim@teaminova.nl>"
+
+RUN apk update && apk add --no-cache shadow 
+
+RUN adduser -D -h /home/app -u 1000 app && \
+    /usr/sbin/usermod -u 1000 app && \
+    /usr/sbin/usermod -s /bin/ash app && \
+    /usr/sbin/usermod -m -d /home/app app && \
+    chown -R app /var/log && \
+    chmod -R g+w /var/log
+
+USER app
